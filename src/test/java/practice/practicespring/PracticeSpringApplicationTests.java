@@ -8,6 +8,8 @@ class PracticeSpringApplicationTests {
 
 	@Test
 	void contextLoads() {
+
+
 	}
 
 }
