@@ -1,7 +1,10 @@
 package practice.practicespring;
+import jakarta.persistence.EntityManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import practice.practicespring.repository.JdbcMemberRepository;
+import practice.practicespring.repository.JpaMemberRepository;
 import practice.practicespring.repository.MemberRepository;
 import practice.practicespring.repository.MemoryMemberRepository;
 import practice.practicespring.service.MemberService;
@@ -18,11 +21,17 @@ import javax.sql.DataSource;
 
 @Configuration
 public class SpringConfig {
-    private final DataSource dataSource;
+//    private final DataSource dataSource;
 
-    public SpringConfig(DataSource dataSource) {
-        this.dataSource = dataSource;
+    private EntityManager em;
+
+    @Autowired
+    public SpringConfig(EntityManager em) {
+        this.em = em;
     }
+//    public SpringConfig(DataSource dataSource) {
+//        this.dataSource = dataSource;
+//    }
 
     @Bean
     public MemberService memberService() {
@@ -32,7 +41,7 @@ public class SpringConfig {
     @Bean
     public MemberRepository memberRepository() {
 //        return new MemoryMemberRepository();
-        return new JdbcMemberRepository(dataSource);
+        return new JpaMemberRepository(em);
     }
 
 }
